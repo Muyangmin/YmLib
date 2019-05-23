@@ -1,8 +1,11 @@
 ext {
     versionConfig = [
-            minSdkversion    : 21,
-            targetSdkVersion : 28,
-            compileSdkVersion: 28,
+            minSdkversion     : 21,
+            targetSdkVersion  : 28,
+            compileSdkVersion : 28,
+
+            libraryVersionCode: 1,
+            libraryVersionName: "0.1.0",
     ]
 
     deps = [

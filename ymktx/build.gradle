@@ -1,35 +1,33 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.android.library'
 
 apply from: "../dependencies.gradle"
 
 android {
     compileSdkVersion versionConfig.compileSdkVersion
+
     defaultConfig {
-        applicationId "org.mym.ymlib.example"
         minSdkVersion versionConfig.minSdkversion
         targetSdkVersion versionConfig.targetSdkVersion
         versionCode versionConfig.libraryVersionCode
         versionName versionConfig.libraryVersionName
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            consumerProguardFiles('proguard-rules.pro')
         }
     }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation deps.kotlinLib
-    implementation deps.appCompat
-    implementation deps.coreKtx
-    implementation deps.constraintLayout
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
