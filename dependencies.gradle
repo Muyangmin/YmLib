@@ -18,7 +18,7 @@ ext {
 
     testDeps = [
             junit   : 'junit:junit:4.12',
-            runner  : 'androidx.test:runner:1.1.1',
+            runner  : 'androidx.test.ext:junit:1.1.1-beta01',
             espresso: 'androidx.test.espresso:espresso-core:3.1.1',
     ]
 }
