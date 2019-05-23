@@ -1,20 +1,8 @@
 apply plugin: 'com.android.library'
 
-apply from: "../dependencies.gradle"
+apply from: "../common-config.gradle"
 
 android {
-    compileSdkVersion versionConfig.compileSdkVersion
-
-    defaultConfig {
-        minSdkVersion versionConfig.minSdkversion
-        targetSdkVersion versionConfig.targetSdkVersion
-        versionCode versionConfig.libraryVersionCode
-        versionName versionConfig.libraryVersionName
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -25,10 +13,5 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

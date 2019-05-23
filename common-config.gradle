@@ -1,0 +1,43 @@
+logger.debug("--------------> Injecting dependencies")
+if (project.plugins.hasPlugin("com.android.application")
+        || project.plugins.hasPlugin("com.android.library")) {
+
+    apply plugin: "kotlin-android"
+    apply plugin: "kotlin-android-extensions"
+    apply plugin: 'kotlin-kapt'
+    apply from: '../dependencies.gradle'
+
+    android {
+        compileSdkVersion versionConfig.compileSdkVersion
+
+        defaultConfig {
+            minSdkVersion versionConfig.minSdkversion
+            targetSdkVersion versionConfig.targetSdkVersion
+            versionCode versionConfig.libraryVersionCode
+            versionName versionConfig.libraryVersionName
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        androidExtensions {
+            experimental = true
+        }
+
+        lintOptions {
+            abortOnError false
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    dependencies {
+        implementation deps.kotlinLib
+
+        testImplementation testDeps.junit
+        androidTestImplementation testDeps.runner
+        androidTestImplementation testDeps.espresso
+    }
+}
+logger.debug("--------------> Injected dependencies.")

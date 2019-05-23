@@ -1,21 +1,12 @@
 apply plugin: 'com.android.application'
 
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply from: "../dependencies.gradle"
+apply from: "../common-config.gradle"
 
 android {
-    compileSdkVersion versionConfig.compileSdkVersion
     defaultConfig {
         applicationId "org.mym.ymlib.example"
-        minSdkVersion versionConfig.minSdkversion
-        targetSdkVersion versionConfig.targetSdkVersion
-        versionCode versionConfig.libraryVersionCode
-        versionName versionConfig.libraryVersionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -30,7 +21,4 @@ dependencies {
     implementation deps.appCompat
     implementation deps.coreKtx
     implementation deps.constraintLayout
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
