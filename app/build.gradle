@@ -21,4 +21,6 @@ dependencies {
     implementation deps.appCompat
     implementation deps.coreKtx
     implementation deps.constraintLayout
+
+    implementation project(":ymlib")
 }

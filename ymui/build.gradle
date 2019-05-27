@@ -3,6 +3,9 @@ apply plugin: 'com.android.library'
 apply from: "../common-config.gradle"
 
 android {
+
+    resourcePrefix "ymui"
+
     buildTypes {
         release {
             minifyEnabled false
@@ -13,5 +16,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation deps.appCompat
+    implementation deps.coreKtx
 }
