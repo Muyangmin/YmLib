@@ -17,5 +17,6 @@ android {
 
 dependencies {
     implementation deps.appCompat
+    implementation deps.recyclerView
     implementation deps.coreKtx
 }
