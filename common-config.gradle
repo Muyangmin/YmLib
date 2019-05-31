@@ -5,7 +5,13 @@ if (project.plugins.hasPlugin("com.android.application")
     apply plugin: "kotlin-android"
     apply plugin: "kotlin-android-extensions"
     apply plugin: 'kotlin-kapt'
+    apply plugin: 'org.jetbrains.dokka'
     apply from: '../dependencies.gradle'
+
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
 
     android {
         compileSdkVersion versionConfig.compileSdkVersion
@@ -38,6 +44,19 @@ if (project.plugins.hasPlugin("com.android.application")
         testImplementation testDeps.junit
         androidTestImplementation testDeps.runner
         androidTestImplementation testDeps.espresso
+    }
+
+    if (project.plugins.hasPlugin("com.android.library")) {
+        apply plugin: 'com.novoda.bintray-release'
+        publish {
+            userOrg = "muyangmin"
+            repoName = 'org.mym'
+            uploadName = 'YmLib'
+            groupId = 'org.mym.ymlib'
+            publishVersion = versionConfig.libraryVersionName
+            desc = 'A widely applicable, easy to use, powerful but light weight foundation library for most modern Android applications.'
+            website = 'https://github.com/Muyangmin/YmLib'
+        }
     }
 }
 logger.debug("--------------> Injected dependencies.")

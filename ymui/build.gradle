@@ -20,3 +20,7 @@ dependencies {
     implementation deps.recyclerView
     implementation deps.coreKtx
 }
+
+publish {
+    artifactId = "ymui"
+}
