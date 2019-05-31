@@ -3,4 +3,22 @@
     <declare-styleable name="YmuiAspectRatioImageView">
         <attr name="ymui_ratio" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="YmuiShadowLayout">
+        <attr name="ymui_shadowColor" format="color" />
+        <attr name="ymui_shadowDx" format="dimension" />
+        <attr name="ymui_shadowDy" format="dimension" />
+        <attr name="ymui_shadowRadius" format="dimension" />
+        <attr name="ymui_shadowShape" format="enum">
+            <enum name="rectangle" value="1" />
+            <enum name="oval" value="2" />
+        </attr>
+        <attr name="ymui_shadowSide" format="flags">
+            <flag name="all" value="0x1111" />
+            <flag name="left" value="0x0001" />
+            <flag name="top" value="0x0010" />
+            <flag name="right" value="0x0100" />
+            <flag name="bottom" value="0x1000" />
+        </attr>
+    </declare-styleable>
 </resources>
