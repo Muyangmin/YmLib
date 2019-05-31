@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText, PxUsage">
+
+    <LinearLayout
+        android:id="@+id/ds_ll_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ShadowRadius" />
+
+        <SeekBar
+            android:id="@+id/ds_seek_radius"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:progress="30" />
+
+        <TextView
+            android:id="@+id/ds_tv_radius_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ds_ll_dx"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/ds_ll_radius"
+        app:layout_constraintStart_toStartOf="@id/ds_ll_radius"
+        app:layout_constraintTop_toBottomOf="@id/ds_ll_radius">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ShadowDx" />
+
+        <SeekBar
+            android:id="@+id/ds_seek_dx"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:progress="30" />
+
+        <TextView
+            android:id="@+id/ds_tv_dx_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ds_ll_dy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/ds_ll_dx"
+        app:layout_constraintStart_toStartOf="@id/ds_ll_dx"
+        app:layout_constraintTop_toBottomOf="@id/ds_ll_dx">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ShadowDy" />
+
+        <SeekBar
+            android:id="@+id/ds_seek_dy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:progress="30" />
+
+        <TextView
+            android:id="@+id/ds_tv_dy_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ds_ll_side"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/ds_ll_dy"
+        app:layout_constraintStart_toStartOf="@id/ds_ll_dy"
+        app:layout_constraintTop_toBottomOf="@id/ds_ll_dy">
+
+        <CheckBox
+            android:id="@+id/ds_ckb_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Left" />
+
+        <CheckBox
+            android:id="@+id/ds_ckb_top"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Top" />
+
+        <CheckBox
+            android:id="@+id/ds_ckb_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Right" />
+
+        <CheckBox
+            android:id="@+id/ds_ckb_bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Bottom" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ds_ll_color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/ds_ll_side"
+        app:layout_constraintStart_toStartOf="@id/ds_ll_side"
+        app:layout_constraintTop_toBottomOf="@id/ds_ll_side">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#33000000"
+            android:padding="5dp"
+            android:text="#33000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#AA3795FF"
+            android:padding="5dp"
+            android:text="#AA3795FF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#33FF3738"
+            android:padding="5dp"
+            android:text="#33FF3738" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#80008000"
+            android:padding="5dp"
+            android:text="#80008000" />
+    </LinearLayout>
+
+    <org.mym.ymlib.widget.YmuiShadowLayout
+        android:id="@+id/ds_shadow_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:ymui_shadowColor="#AA3795FF"
+        app:ymui_shadowDx="10dp"
+        app:ymui_shadowDy="10dp"
+        app:ymui_shadowRadius="10dp">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#808080" />
+    </org.mym.ymlib.widget.YmuiShadowLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

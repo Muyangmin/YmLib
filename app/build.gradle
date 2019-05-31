@@ -21,6 +21,9 @@ dependencies {
     implementation deps.appCompat
     implementation deps.coreKtx
     implementation deps.constraintLayout
+    implementation deps.recyclerView
+    implementation deps.brvah
+    implementation deps.rounedImageView
 
     implementation project(":ymlib")
 }

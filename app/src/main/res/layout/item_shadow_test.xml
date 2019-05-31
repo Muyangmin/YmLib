@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.mym.ymlib.widget.YmuiShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:ymui_shadowColor="#14000000"
+    app:ymui_shadowRadius="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bkg_white_round_5"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <org.mym.ymlib.widget.YmuiShadowLayout
+            android:id="@+id/item_shadow_sl_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:ymui_shadowColor="#AA3795FF"
+            app:ymui_shadowRadius="5dp"
+            app:ymui_shadowShape="oval">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_default_avatar"
+                app:riv_corner_radius="24dp"
+                app:riv_oval="true" />
+        </org.mym.ymlib.widget.YmuiShadowLayout>
+
+        <TextView
+            android:id="@+id/item_shadow_tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/item_shadow_sl_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_shadow_sl_avatar"
+            app:layout_constraintTop_toTopOf="@id/item_shadow_sl_avatar"
+            tools:text="@tools:sample/full_names" />
+
+        <TextView
+            android:id="@+id/item_shadow_tv_random"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/item_shadow_sl_avatar"
+            app:layout_constraintTop_toBottomOf="@id/item_shadow_sl_avatar"
+            tools:text="@tools:sample/lorem" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</org.mym.ymlib.widget.YmuiShadowLayout>
