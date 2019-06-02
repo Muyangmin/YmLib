@@ -51,7 +51,6 @@ if (project.plugins.hasPlugin("com.android.application")
         publish {
             userOrg = "muyangmin"
             repoName = 'org.mym'
-            uploadName = 'YmLib'
             groupId = 'org.mym.ymlib'
             publishVersion = versionConfig.libraryVersionName
             desc = 'A widely applicable, easy to use, powerful but light weight foundation library for most modern Android applications.'
