@@ -16,9 +16,9 @@ android {
 }
 
 dependencies {
-    implementation deps.appCompat
-    implementation deps.recyclerView
-    implementation deps.coreKtx
+    compileOnly deps.appCompat
+    compileOnly deps.recyclerView
+    compileOnly deps.coreKtx
 }
 
 publish {

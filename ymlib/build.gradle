@@ -13,9 +13,6 @@ android {
 }
 
 dependencies {
-    implementation deps.kotlinLib
-    implementation deps.appCompat
-
     api project(":ymktx")
     api project(":ymui")
 }
