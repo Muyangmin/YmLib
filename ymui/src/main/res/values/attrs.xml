@@ -14,11 +14,11 @@
             <enum name="oval" value="2" />
         </attr>
         <attr name="ymui_shadowSide" format="flags">
-            <flag name="all" value="0x1111" />
-            <flag name="left" value="0x0001" />
-            <flag name="top" value="0x0010" />
-            <flag name="right" value="0x0100" />
-            <flag name="bottom" value="0x1000" />
+            <flag name="all" value="15" />
+            <flag name="left" value="1" />
+            <flag name="top" value="2" />
+            <flag name="right" value="4" />
+            <flag name="bottom" value="8" />
         </attr>
     </declare-styleable>
 </resources>
