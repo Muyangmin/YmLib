@@ -2,6 +2,8 @@
 ### YmLib
 This project is planning to create a widely applicable, easy to use, powerful but light weight foundation library for most modern Android applications.
 
+### [ChangeLog](./CHANGELOG.md)
+
 ### Features
 * lots of extension methods used in real practical projects
 * 100% compatible with Kotlin idiomatic usage
