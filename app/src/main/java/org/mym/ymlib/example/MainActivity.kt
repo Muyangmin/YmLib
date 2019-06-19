@@ -25,5 +25,9 @@ class MainActivity : AppCompatActivity() {
         main_btn_dynamic.setOnClickListener {
             startActivity(Intent(this, DynamicShadowActivity::class.java))
         }
+
+        main_btn_simple_list.setOnClickListener {
+            startActivity(Intent(this, SimpleListActivity::class.java))
+        }
     }
 }
