@@ -23,7 +23,7 @@ import org.mym.ymlib.widget.YmuiDividerItemDecoration.Companion.MIDDLE
  */
 class YmuiDividerItemDecoration(
     context: Context, orientation: Int,
-    private val showDividers: (position: Int, childCount: Int) -> Boolean = ALL
+    private val showDividers: (position: Int, itemCount: Int) -> Boolean = ALL
 ) : RecyclerView.ItemDecoration() {
 
     companion object {
@@ -84,14 +84,22 @@ class YmuiDividerItemDecoration(
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         val localDivider = divider
-        val position = parent.getChildAdapterPosition(view)
-        val childCount = parent.childCount
         when {
             localDivider == null -> outRect.setEmpty()
-            !showDividers(position, childCount) -> outRect.setEmpty()
+            !shouldShowDividerForItemView(view, parent) -> outRect.setEmpty()
             orientation == VERTICAL -> outRect.set(0, 0, 0, localDivider.intrinsicHeight)
             else -> outRect.set(0, 0, localDivider.intrinsicWidth, 0)
         }
+    }
+
+    /**
+     * 判断是否需要为 RecyclerView 的某个特定 itemView 绘制 divider。这个方法通常在循环中调用。
+     */
+    private fun shouldShowDividerForItemView(view: View, parent: RecyclerView): Boolean {
+        val position = parent.getChildAdapterPosition(view)
+        val itemCount = parent.adapter?.itemCount ?: 0
+        //计算 divider 是否显示时暴露的 api 是 adapter pos 和 adapter count。由于复用的原因 itemCount 通常比 childCount 大。
+        return showDividers(position, itemCount)
     }
 
     private fun drawVertical(canvas: Canvas, parent: RecyclerView) {
@@ -107,12 +115,14 @@ class YmuiDividerItemDecoration(
             right = parent.width
         }
 
+        //这里需要使用 childCount，很显然，只有实际的 view 才需要计算和绘制 divider。
+        //因复用导致的 itemCount 大于 childCount 的部分可以无需考虑。
         val childCount = parent.childCount
         for (i in 0 until childCount) {
-            if (showDividers(i, childCount)) {
-                val child = parent.getChildAt(i)
-                parent.getDecoratedBoundsWithMargins(child, mBounds)
-                val bottom = mBounds.bottom + Math.round(child.translationY)
+            val view = parent.getChildAt(i)
+            if (shouldShowDividerForItemView(view, parent)) {
+                parent.getDecoratedBoundsWithMargins(view, mBounds)
+                val bottom = mBounds.bottom + Math.round(view.translationY)
                 val top = bottom - divider!!.intrinsicHeight
                 divider!!.setBounds(left, top, right, bottom)
                 divider!!.draw(canvas)
@@ -136,10 +146,10 @@ class YmuiDividerItemDecoration(
 
         val childCount = parent.childCount
         for (i in 0 until childCount) {
-            if (showDividers(i, childCount)) {
-                val child = parent.getChildAt(i)
-                parent.getDecoratedBoundsWithMargins(child, mBounds)
-                val right = mBounds.right + Math.round(child.translationX)
+            val view = parent.getChildAt(i)
+            if (shouldShowDividerForItemView(view, parent)) {
+                parent.getDecoratedBoundsWithMargins(view, mBounds)
+                val right = mBounds.right + Math.round(view.translationX)
                 val left = right - divider!!.intrinsicWidth
                 divider!!.setBounds(left, top, right, bottom)
                 divider!!.draw(canvas)
