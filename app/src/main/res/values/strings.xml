@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">YmLib</string>
+
+    <string name="mutex_option_hint">以下三个选项只能选一个(当前选中%1$d)</string>
+    <string name="mutex_line_hint">以下三行只能选一个(当前选中%1$d)</string>
 </resources>

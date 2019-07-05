@@ -29,5 +29,9 @@ class MainActivity : AppCompatActivity() {
         main_btn_simple_list.setOnClickListener {
             startActivity(Intent(this, SimpleListActivity::class.java))
         }
+
+        main_btn_mutex.setOnClickListener {
+            startActivity(Intent(this, MutexActivity::class.java))
+        }
     }
 }

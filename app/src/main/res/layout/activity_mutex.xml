@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        android:id="@+id/mutex_tv_option_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        tools:text="@string/mutex_option_hint" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/mutex_ckb_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option A" />
+
+        <RadioButton
+            android:id="@+id/mutex_ckb_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option B" />
+
+        <RadioButton
+            android:id="@+id/mutex_ckb_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option C" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mutex_tv_line_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        tools:text="@string/mutex_line_hint" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_vertical_e5_1dp"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:id="@+id/mutex_ll_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:duplicateParentState="true"
+                android:text="选项1"
+                android:textColor="@drawable/selector_text_grey_selected_blue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mutex_ll_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:duplicateParentState="true"
+                android:text="选项2"
+                android:textColor="@drawable/selector_text_grey_selected_blue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mutex_ll_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:duplicateParentState="true"
+                android:text="选项3"
+                android:textColor="@drawable/selector_text_grey_selected_blue" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mutex_cs_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:duplicateParentState="true"
+                android:text="选项4"
+                android:textColor="@drawable/selector_text_grey_selected_blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
