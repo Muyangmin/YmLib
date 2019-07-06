@@ -1,3 +1,8 @@
+### 0.4.0
+#### Ymui
+* New Feature: `MutexViewGroup`
+* New utility class `FontSpan`
+
 ### 0.3.3
 * Fixed: showDividers() function should pass itemCount as second parameter but actually childCount.
 
