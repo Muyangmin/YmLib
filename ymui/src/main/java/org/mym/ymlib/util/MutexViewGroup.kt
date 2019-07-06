@@ -1,7 +1,7 @@
 package org.mym.ymlib.util
 
 import android.view.View
-import android.widget.CompoundButton
+import android.widget.Checkable
 
 /**
  * 代表一个逻辑互斥的 `View` 组。适用于多个 View 中的一个与其他状态不同的场景。
@@ -69,7 +69,7 @@ class MutexViewGroup<V : View>(private val views: Array<out V>) {
     }
 }
 
-fun <V : CompoundButton> MutexViewGroup<V>.check(v: V) {
+fun <V> MutexViewGroup<V>.check(v: V) where V : View, V : Checkable {
     executeCmdInternal(v, { isChecked = true }) { isChecked = false }
 }
 
