@@ -2,6 +2,12 @@ apply plugin: 'com.android.library'
 
 apply from: "../common-config.gradle"
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += "-Xuse-experimental=kotlin.contracts.ExperimentalContracts"
+    }
+}
+
 android {
     buildTypes {
         release {
@@ -14,6 +20,7 @@ android {
 
 dependencies {
     compileOnly deps.appCompat
+    androidTestImplementation deps.appCompat
 }
 
 publish {
