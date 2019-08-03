@@ -1,3 +1,10 @@
+### 0.4.1
+#### Ymui
+* New Feature: `YmuiToast`
+
+#### YmKtx
+* New extend method `addAll` for `CircularArray`. 
+
 ### 0.4.0
 #### Ymui
 * New Feature: `MutexViewGroup`
