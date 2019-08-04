@@ -19,32 +19,54 @@ import android.widget.Checkable
  * //set v3 as selected and others not.
  * mvg.select(v3)
  * ```
+ *
+ * ### Event Hook
+ * 如果只需要修改互斥组中的 View 的背景图、文字颜色等，在XML上使用 selector，然后调用相关方法即可完成。
+ * 但如果需要修改诸如 textAppearance 之类无法使用 selector 完成的属性，则可以使用 [registerEventHook]，它相当于给互斥事件做额外的监听。
  */
 @Suppress("unused")
 class MutexViewGroup<V : View>(private val views: Array<out V>) {
 
+    companion object {
+        const val ACTION_ENABLE = "enable"
+        const val ACTION_SELECT = "select"
+        const val ACTION_CLICKABLE = "clickable"
+        const val ACTION_FOCUSABLE = "focusable"
+        const val ACTION_CHECK = "check"
+    }
+
+    private val actionMap: MutableMap<String, (V, Boolean) -> Unit> = mutableMapOf()
+
+    init {
+        actionMap[ACTION_ENABLE] = { v, value -> v.isEnabled = value }
+        actionMap[ACTION_SELECT] = { v, value -> v.isSelected = value }
+        actionMap[ACTION_CLICKABLE] = { v, value -> v.isClickable = value }
+        actionMap[ACTION_FOCUSABLE] = { v, value -> v.isFocusable = value }
+        actionMap[ACTION_CHECK] = { v, value -> (v as? Checkable)?.isChecked = value }
+    }
+
     fun enable(v: V) {
-        executeCmdInternal(v, { isEnabled = true }) { isEnabled = false }
+        executeCmdInternal(v, ACTION_ENABLE, valueForTarget = true, valueForOthers = false)
     }
 
     fun disable(v: V) {
-        executeCmdInternal(v, { isEnabled = false }) { isEnabled = true }
+        executeCmdInternal(v, ACTION_ENABLE, valueForTarget = false, valueForOthers = true)
     }
 
     fun select(v: V) {
-        executeCmdInternal(v, { isSelected = true }) { isSelected = false }
+        executeCmdInternal(v, ACTION_SELECT, valueForTarget = true, valueForOthers = false)
     }
 
     fun unSelect(v: V) {
-        executeCmdInternal(v, { isSelected = false }) { isSelected = true }
+        executeCmdInternal(v, ACTION_SELECT, valueForTarget = false, valueForOthers = true)
     }
 
     fun clickable(v: V) {
-        executeCmdInternal(v, { isClickable = true }) { isClickable = false }
+        executeCmdInternal(v, ACTION_CLICKABLE, valueForTarget = true, valueForOthers = false)
     }
 
     fun focusable(v: V) {
-        executeCmdInternal(v, { isFocusable = true }) { isFocusable = false }
+        executeCmdInternal(v, ACTION_FOCUSABLE, valueForTarget = true, valueForOthers = false)
     }
 
     /**
@@ -53,24 +75,37 @@ class MutexViewGroup<V : View>(private val views: Array<out V>) {
     fun asList(): List<V> = views.toList()
 
     /**
-     * 对 [target] 执行 [cmd]， 其他元素执行 [oppositeCmd]。
+     * 为指定事件注册监听。重复添加监听可能导致代码重复执行。
      */
-    internal inline fun executeCmdInternal(target: V, cmd: V.() -> Unit, oppositeCmd: V .() -> Unit) {
+    fun registerEventHook(event: String, doOnEvent: (V, Boolean) -> Unit) {
+        val originalAction = actionMap[event] ?: return
+        //Wrap original action and hooks
+        actionMap[event] = { view, value ->
+            originalAction.invoke(view, value)
+            doOnEvent(view, value)
+        }
+    }
+
+    /**
+     * 向 [target] 的 [event] 事件对应函数传递 [valueForTarget]， 其他元素传递 [valueForOthers]。
+     */
+    internal fun executeCmdInternal(target: V, event: String, valueForTarget: Boolean, valueForOthers: Boolean) {
         if (!views.contains(target)) {
             throw IllegalArgumentException("Target view is not in the group, please check again!")
         }
-        cmd.invoke(target)
+        val action = actionMap[event] ?: return
+        action.invoke(target, valueForTarget)
 
         views.forEach {
             if (it != target) {
-                oppositeCmd.invoke(it)
+                action.invoke(it, valueForOthers)
             }
         }
     }
 }
 
 fun <V> MutexViewGroup<V>.check(v: V) where V : View, V : Checkable {
-    executeCmdInternal(v, { isChecked = true }) { isChecked = false }
+    executeCmdInternal(v, MutexViewGroup.ACTION_CHECK, valueForTarget = true, valueForOthers = false)
 }
 
 /**
