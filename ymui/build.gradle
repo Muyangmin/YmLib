@@ -17,6 +17,7 @@ android {
 
 dependencies {
     compileOnly deps.appCompat
+    compileOnly deps.material
     compileOnly deps.recyclerView
     compileOnly deps.coreKtx
 }

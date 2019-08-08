@@ -10,6 +10,7 @@ ext {
 
     deps = [
             appCompat       : "androidx.appcompat:appcompat:1.1.0-alpha05",
+            material        : "com.google.android.material:material:1.1.0-alpha09",
             recyclerView    : "androidx.recyclerview:recyclerview:1.1.0-alpha03",
             brvah           : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46",
             rounedImageView : "com.makeramen:roundedimageview:2.3.0",
