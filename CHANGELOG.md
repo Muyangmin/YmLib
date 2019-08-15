@@ -1,3 +1,12 @@
+### 0.5.0 SNAPSHOT
+#### ymktx
+* New extend method for `EditText`: `trimmedString()`
+* New `XXX.fooCompat` series extend method (equivalent to call `XXXCompat.foo()` methods in official compat library.)
+
+#### Ymui
+* New feature: `registerEventHook()` for `MutexEventGroup`
+* New adapter class: `SimpleTabSelectListener`
+
 ### 0.4.1
 #### Ymui
 * New Feature: `YmuiToast`
