@@ -4,8 +4,8 @@ ext {
             targetSdkVersion  : 28,
             compileSdkVersion : 28,
 
-            libraryVersionCode: 8,
-            libraryVersionName: "0.4.1",
+            libraryVersionCode: 9,
+            libraryVersionName: "0.5.0",
     ]
 
     deps = [
