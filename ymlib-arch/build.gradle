@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+apply from: "../common-config.gradle"
+
+android {
+
+    resourcePrefix "ymarch"
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            consumerProguardFiles('proguard-rules.pro')
+        }
+    }
+
+}
+
+dependencies {
+    api project(":ymlib-annotation")
+}
+
+publish {
+    artifactId = "ymarch"
+}
