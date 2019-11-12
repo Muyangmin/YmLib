@@ -18,6 +18,8 @@ ext {
             kotlinLib       : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
             kotlinReflect   : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
             coreKtx         : "androidx.core:core-ktx:1.0.2",
+
+            javapoet        : "com.squareup:javapoet:1.11.1",
     ]
 
     testDeps = [

@@ -4,6 +4,8 @@ apply from: '../dependencies.gradle'
 
 dependencies {
     implementation deps.kotlinLib
+    implementation deps.javapoet
+    implementation project(":ymlib-annotation")
 }
 
 sourceCompatibility = "8"
