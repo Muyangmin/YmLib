@@ -1,6 +1,7 @@
 package org.mym.ymlib.example.arch
 
 import android.app.Application
+import android.content.Context
 import org.mym.ymlib.annotation.ApplicationLifecycleAware
 import org.mym.ymlib.annotation.OnApplicationAttachBaseContext
 import org.mym.ymlib.annotation.OnApplicationCreate
@@ -9,7 +10,7 @@ import org.mym.ymlib.annotation.OnApplicationCreate
 class LogConfig {
 
     @OnApplicationAttachBaseContext
-    fun onAttachBaseContext(application: Application) {
+    fun onAttachBaseContext(context: Context) {
         println("It works")
     }
 
