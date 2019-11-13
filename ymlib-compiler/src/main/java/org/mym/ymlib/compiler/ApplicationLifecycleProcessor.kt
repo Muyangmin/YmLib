@@ -1,10 +1,9 @@
 package org.mym.ymlib.compiler
 
-import com.squareup.javapoet.JavaFile
-import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.TypeName
-import com.squareup.javapoet.TypeSpec
 import org.mym.ymlib.annotation.ApplicationLifecycleAware
+import org.mym.ymlib.annotation.OnApplicationAttachBaseContext
+import org.mym.ymlib.annotation.OnApplicationCreate
+import org.mym.ymlib.compiler.generator.ApplicationDelegateGenerator
 import org.mym.ymlib.compiler.util.error
 import org.mym.ymlib.compiler.util.note
 import javax.annotation.processing.*
@@ -16,15 +15,22 @@ import javax.lang.model.element.TypeElement
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes("org.mym.ymlib.annotation.ApplicationLifecycleAware")
-class ApplicationLifecycleAwareProcessor : AbstractProcessor() {
+class ApplicationLifecycleProcessor : AbstractProcessor() {
 
     private var roundCount: Int = 0
+
+    private lateinit var generator: ApplicationDelegateGenerator
+
+    override fun init(processingEnv: ProcessingEnvironment) {
+        super.init(processingEnv)
+        generator = ApplicationDelegateGenerator(processingEnv)
+    }
 
     override fun process(
         annotations: MutableSet<out TypeElement>?,
         roundEnv: RoundEnvironment
     ): Boolean {
-        processingEnv.note("-----> ApplicationLifecycleAwareProcessor#process(Round $roundCount) Start")
+        processingEnv.note("-----> ApplicationLifecycleProcessor#process(Round $roundCount) Start")
         if (!annotations.isNullOrEmpty()) {
             processingEnv.note(annotations.joinToString { it.qualifiedName })
             for (element in roundEnv.getElementsAnnotatedWith(ApplicationLifecycleAware::class.java)) {
@@ -32,24 +38,21 @@ class ApplicationLifecycleAwareProcessor : AbstractProcessor() {
                     return false
                 }
                 //TODO add element to collection and then generate code
+                val methods = element.enclosedElements.filter {
+                    it.kind == ElementKind.METHOD
+                }
+
+                generator.registerOnAttachBaseContext(element as TypeElement, methods.filter {
+                    it.getAnnotation(OnApplicationAttachBaseContext::class.java) != null
+                })
+
+                generator.registerOnCreate(element, methods.filter {
+                    it.getAnnotation(OnApplicationCreate::class.java) != null
+                })
             }
+            generator.generate()
         }
-//        val method = MethodSpec.methodBuilder("onCreate")
-//            .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-//            .addStatement("\$T.out.println(\$S)", System::class.java, "Hello, JavaPoet!")
-//            .returns(TypeName.VOID)
-//            .build()
-//
-//        val injector = TypeSpec.classBuilder("ApplicationInjector")
-//            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-//            .addMethod(method)
-//            .build()
-//
-//        val file = JavaFile.builder("org.mym.ymlib", injector)
-//            .build()
-//
-//        file.writeTo(processingEnv.filer)
-        processingEnv.note("-----> ApplicationLifecycleAwareProcessor#process(Round $roundCount) End")
+        processingEnv.note("-----> ApplicationLifecycleProcessor#process(Round $roundCount) End")
         roundCount++
         return true
     }
