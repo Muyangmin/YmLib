@@ -7,6 +7,7 @@ import org.mym.ymlib.compiler.data.MappingMode
 import org.mym.ymlib.compiler.util.error
 import org.mym.ymlib.compiler.util.lastWord
 import org.mym.ymlib.compiler.util.note
+import org.mym.ymlib.compiler.util.unCapitalize
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
@@ -252,6 +253,7 @@ open class CodeDelegationProcessor(
     private fun generateFinalFile() {
         val typeBuilder = TypeSpec.classBuilder(className)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+            .addFields(buildNecessaryFields())
 
         delegateMappings.forEach {
             typeBuilder.addMethod(buildDelegateMethod(it))
@@ -262,13 +264,26 @@ open class CodeDelegationProcessor(
         file.writeTo(processingEnv.filer)
     }
 
+    private fun buildNecessaryFields(): List<FieldSpec> {
+        return callMappings.flatMap { it.value }
+            .distinctBy { it.callClass.qualifiedName }
+            .map {
+                val type = ClassName.get(it.callClass.asType())
+                FieldSpec.builder(
+                    type, decideFieldName(it.callClass)
+                ).addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .initializer("new \$T()", type)
+                    .build()
+            }
+    }
+
     /**
      * 生成每个映射关系对应的代理方法。
      */
     private fun buildDelegateMethod(delegateMapping: DelegateMapping): MethodSpec {
         val delegateMethod = delegateMapping.delegateMethod
         val builder = MethodSpec.methodBuilder(delegateMethod.simpleName.toString())
-            .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
             .returns(TypeName.VOID)
 
         //按需注入 ref 参数
@@ -293,6 +308,10 @@ open class CodeDelegationProcessor(
             builder.addCode(buildDelegateMethodCall(delegateMapping, callMapping))
         }
         return builder.build()
+    }
+
+    private fun decideFieldName(fieldType: TypeElement): String {
+        return fieldType.simpleName.toString().unCapitalize()
     }
 
     private fun decideRefArgName(ref: TypeElement): String {
@@ -328,8 +347,8 @@ open class CodeDelegationProcessor(
             }
         }
         builder.addStatement(
-            "new \$T().\$N(\$L)",
-            ClassName.get(callMapping.callClass.asType()),
+            "\$L.\$N(\$L)",
+            decideFieldName(callMapping.callClass),
             callMapping.callMethod.simpleName,
             paramLiteral
         )
