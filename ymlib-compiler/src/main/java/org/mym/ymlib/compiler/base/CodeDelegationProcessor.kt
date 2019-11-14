@@ -1,6 +1,7 @@
 package org.mym.ymlib.compiler.base
 
 import com.squareup.javapoet.*
+import org.mym.ymlib.annotation.Ordered
 import org.mym.ymlib.compiler.data.CallMapping
 import org.mym.ymlib.compiler.data.DelegateMapping
 import org.mym.ymlib.compiler.data.MappingMode
@@ -302,8 +303,10 @@ open class CodeDelegationProcessor(
                 ClassName.get(param.asType()), decideMethodArgName(param)
             )
         }
-        //注入全部方法调用
-        calls?.forEach { callMapping ->
+        //注入全部方法调用，如果有指定了 order 则按照 order 顺序，否则默认最小优先级
+        calls?.sortedBy {
+            it.callMethod.getAnnotation(Ordered::class.java)?.order ?: Int.MAX_VALUE
+        }?.forEach { callMapping ->
             //不能使用 AddStatement 的方式来调用，因为 Statement 是不能嵌套的。
             builder.addCode(buildDelegateMethodCall(delegateMapping, callMapping))
         }
