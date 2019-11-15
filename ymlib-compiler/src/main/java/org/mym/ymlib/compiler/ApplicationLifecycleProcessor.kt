@@ -129,6 +129,13 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
                 .addAnnotation(Override::class.java)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameters(params)
+                .also {
+                    if (!parentMethod.modifiers.contains(Modifier.ABSTRACT)) {
+                        //调用父类方法
+                       it.addStatement("super.\$L(\$L)", methodName, originParams)
+                    }
+                }
+                //调用 delegate 方法
                 .addStatement("\$L.\$L(\$L)", decideFieldName(delegate), methodName, invokeParam)
                 .build()
         }
