@@ -85,29 +85,35 @@ open class CodeDelegationProcessor(
         return when {
             callMethod.parameters.isEmpty() -> MappingMode.NO_ARGS
             callMethod.parameters.size == targetMethod.parameters.size && isAllSameType(
-                callMethod.parameters, targetMethod.parameters
+                targetMethod.parameters, callMethod.parameters
             ) -> MappingMode.ACCURATE_PARAM
-            callMethod.parameters.size == 1 && processingEnv.typeUtils.isAssignable(
-                targetType.asType(), callMethod.parameters[0].asType()
+            callMethod.parameters.size == 1 && isCompatibleType(
+                targetType,
+                callMethod.parameters[0]
             ) -> MappingMode.REF
-            callMethod.parameters.size == targetMethod.parameters.size + 1 && isAllSameType(
-                callMethod.parameters.subList(1, callMethod.parameters.size),
-                targetMethod.parameters
-            ) -> MappingMode.REF_AND_PARAM
+            callMethod.parameters.size == targetMethod.parameters.size + 1
+                    && isCompatibleType(targetType, callMethod.parameters[0])
+                    && isAllSameType(
+                targetMethod.parameters,
+                callMethod.parameters.subList(1, callMethod.parameters.size)
+            )
+            -> MappingMode.REF_AND_PARAM
             else -> null
         }
     }
 
+    private fun isCompatibleType(allowChild: Element, allowParent: VariableElement): Boolean {
+        return processingEnv.typeUtils.isAssignable(allowChild.asType(), allowParent.asType())
+    }
+
     private fun isAllSameType(
-        actual: List<VariableElement>,
-        expected: List<VariableElement>
+        allowChild: List<VariableElement>,
+        allowParent: List<VariableElement>
     ): Boolean {
         var isSameType = true
-        for (index in actual.indices) {
-            val actualType = actual[index].asType()
-            val expectedType = expected[index].asType()
-            if (!processingEnv.typeUtils.isSameType(actualType, expectedType)) {
-                isSameType = false
+        for (index in allowChild.indices) {
+            isSameType = isCompatibleType(allowChild[index], allowParent[index])
+            if (!isSameType) {
                 break
             }
         }
@@ -137,7 +143,7 @@ open class CodeDelegationProcessor(
                             mapping.delegateClass, mapping.delegateMethod
                         )
                     ) {
-                        "Cannot decide how to call the method $it"
+                        "Cannot decide how to call the method $element.$it"
                     }
                     callMappings[mapping]?.add(
                         CallMapping(
