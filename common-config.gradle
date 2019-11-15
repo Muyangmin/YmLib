@@ -1,17 +1,52 @@
 logger.debug("--------------> Injecting dependencies")
+
+//注入公共依赖
+if (project.plugins.hasPlugin("com.android.application")
+        || project.plugins.hasPlugin("com.android.library")
+        || project.plugins.hasPlugin("java-library")) {
+    apply from: '../dependencies.gradle'
+}
+
+//library 公共配置
+if (project.plugins.hasPlugin("com.android.library")
+        || project.plugins.hasPlugin("java-library")) {
+    apply plugin: 'com.novoda.bintray-release'
+    apply plugin: 'org.jetbrains.dokka'
+
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
+
+    publish {
+        userOrg = "muyangmin"
+        repoName = 'org.mym'
+        groupId = 'org.mym.ymlib'
+        publishVersion = LIBRARY_VERSION_NAME
+        desc = 'A widely applicable, easy to use, powerful but light weight foundation library for most modern Android applications.'
+        website = 'https://github.com/Muyangmin/YmLib'
+    }
+}
+
+//Java 模块公共配置
+if (project.plugins.hasPlugin("java-library")){
+    apply plugin: 'kotlin'
+
+    dependencies {
+        implementation deps.kotlinLib
+    }
+
+    sourceCompatibility = "8"
+    targetCompatibility = "8"
+}
+
+//Android 模块公共配置
 if (project.plugins.hasPlugin("com.android.application")
         || project.plugins.hasPlugin("com.android.library")) {
 
     apply plugin: "kotlin-android"
     apply plugin: "kotlin-android-extensions"
     apply plugin: 'kotlin-kapt'
-    apply plugin: 'org.jetbrains.dokka'
-    apply from: '../dependencies.gradle'
-
-    dokka {
-        outputFormat = 'html'
-        outputDirectory = "$buildDir/javadoc"
-    }
 
     android {
         compileSdkVersion versionConfig.compileSdkVersion
@@ -19,8 +54,8 @@ if (project.plugins.hasPlugin("com.android.application")
         defaultConfig {
             minSdkVersion versionConfig.minSdkversion
             targetSdkVersion versionConfig.targetSdkVersion
-            versionCode versionConfig.libraryVersionCode
-            versionName versionConfig.libraryVersionName
+            versionCode LIBRARY_VERSION_CODE as int
+            versionName LIBRARY_VERSION_NAME
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
 
@@ -44,18 +79,6 @@ if (project.plugins.hasPlugin("com.android.application")
         testImplementation testDeps.junit
         androidTestImplementation testDeps.runner
         androidTestImplementation testDeps.espresso
-    }
-
-    if (project.plugins.hasPlugin("com.android.library")) {
-        apply plugin: 'com.novoda.bintray-release'
-        publish {
-            userOrg = "muyangmin"
-            repoName = 'org.mym'
-            groupId = 'org.mym.ymlib'
-            publishVersion = versionConfig.libraryVersionName
-            desc = 'A widely applicable, easy to use, powerful but light weight foundation library for most modern Android applications.'
-            website = 'https://github.com/Muyangmin/YmLib'
-        }
     }
 }
 logger.debug("--------------> Injected dependencies.")
