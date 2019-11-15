@@ -5,41 +5,71 @@ import android.app.Application
 import android.os.Bundle
 import org.mym.ymlib.annotation.ApplicationLifecycleAware
 import org.mym.ymlib.annotation.OnApplicationCreate
+import org.mym.ymlib.annotation.OnApplicationExit
+import kotlin.reflect.KClass
 
 @ApplicationLifecycleAware
 class ActivityStack {
 
+    val activityList = mutableListOf<Activity>()
+
+    //Test ref
     @OnApplicationCreate
     fun onCreate(application: Application) {
-        application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+        application.registerActivityLifecycleCallbacks(object :
+            Application.ActivityLifecycleCallbacks {
             override fun onActivityPaused(activity: Activity?) {
-                // Intend empty
+                //Empty
             }
 
             override fun onActivityResumed(activity: Activity?) {
-                // Intend empty
+                //Empty
             }
 
-            override fun onActivityStarted(activity: Activity?) {
-                // Intend empty
+            override fun onActivityStarted(activity: Activity) {
+                //Empty
             }
 
-            override fun onActivityDestroyed(activity: Activity?) {
-                // Intend empty
+            override fun onActivityDestroyed(activity: Activity) {
+                //Empty
+                activityList.remove(activity)
             }
 
             override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
-                // Intend empty
+                //Empty
             }
 
             override fun onActivityStopped(activity: Activity?) {
-                // Intend empty
+                //Empty
             }
 
-            override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-                // Intend empty
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                //Empty
+                activityList.add(activity)
             }
         })
+    }
+
+    fun <T : Activity> finishExcept(clz: KClass<T>) {
+        for (act in activityList) {
+            if (act::class != clz) {
+                act.finish()
+            }
+        }
+    }
+
+    //Test different method param name
+    @OnApplicationExit
+    fun exit(whatever: Int) {
+        activityList.forEach {
+            try {
+                if (!it.isFinishing) {
+                    it.finish()
+                }
+            } catch (ignored: Throwable) {
+            }
+        }
+        activityList.clear()
     }
 
 }

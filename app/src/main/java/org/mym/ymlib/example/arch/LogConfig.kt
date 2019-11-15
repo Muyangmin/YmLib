@@ -7,17 +7,20 @@ import org.mym.ymlib.annotation.*
 @ApplicationLifecycleAware
 class LogConfig {
 
+    //Test ordered ref-param
     @OnApplicationAttachBaseContext
     @Ordered(1)
-    fun onAttachBaseContext(context: Context) {
+    fun onAttachBaseContext(context: Context, code: Any) {
         println("It works")
     }
 
+    //Test NO-args
     @OnApplicationCreate
-    fun onCreate(application: Application) {
+    fun onCreate() {
         println("I'm trying to inject log config into application.")
     }
 
+    //TEST accurate
     @OnApplicationExit
     fun onExit(code: Int) {
         println("On Exit")
