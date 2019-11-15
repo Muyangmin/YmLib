@@ -3,9 +3,6 @@ ext {
             minSdkversion     : 21,
             targetSdkVersion  : 28,
             compileSdkVersion : 28,
-
-            libraryVersionCode: 10,
-            libraryVersionName: "0.6.0-SNAPSHOT",
     ]
 
     deps = [
