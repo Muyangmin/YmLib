@@ -71,12 +71,27 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
             .addSuperinterface(processingEnv.classNameFromQualifier(QUALIFIER_MANUAL_EXIT_APP))
             .addField(buildFieldSpec(processingEnv.typeElementFromQualifier(QUALIFIER_GEN_DELEGATE)))
             .addMethods(buildMethods())
+            .addSingletonField()
 
         val javaFile = JavaFile.builder(PACKAGE_NAME, typeSpec.build())
             .build()
 //        processingEnv.note(javaFile.toString())
         javaFile.writeTo(processingEnv.filer)
         return true
+    }
+
+    private fun TypeSpec.Builder.addSingletonField(): TypeSpec.Builder {
+        val fieldName = "instance"
+        val fieldSpec = FieldSpec.builder(ClassName.get(PACKAGE_NAME, GENERATE_APP_CLASS_NAME), fieldName)
+            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+            .build()
+
+        val constructor = MethodSpec.constructorBuilder()
+            .addModifiers(Modifier.PUBLIC)
+            .addStatement("\$L = this", fieldName)
+            .build()
+        return addField(fieldSpec)
+            .addMethod(constructor)
     }
 
     private fun buildMethods(): List<MethodSpec> {
