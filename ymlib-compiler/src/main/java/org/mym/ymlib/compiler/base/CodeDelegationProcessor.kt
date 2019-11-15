@@ -5,15 +5,11 @@ import org.mym.ymlib.annotation.Ordered
 import org.mym.ymlib.compiler.data.CallMapping
 import org.mym.ymlib.compiler.data.DelegateMapping
 import org.mym.ymlib.compiler.data.MappingMode
-import org.mym.ymlib.compiler.util.error
-import org.mym.ymlib.compiler.util.lastWord
-import org.mym.ymlib.compiler.util.note
-import org.mym.ymlib.compiler.util.unCapitalize
+import org.mym.ymlib.compiler.util.*
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.*
-import javax.lang.model.type.TypeKind
 
 /**
  * 用于生成一系列与被代理对象一样签名的方法，达到使用注解解耦的目的。
@@ -55,9 +51,7 @@ open class CodeDelegationProcessor(
         val typeElement = elements.getTypeElement(classQualifier)
 
         //尝试查找匹配的方法，如果没有则抛出异常
-        val targetElement = requireNotNull(findTargetExecutableElement(typeElement, methodName), {
-            "Unable to find mapping method $classQualifier.$methodName, please check again."
-        })
+        val targetElement = processingEnv.findTargetExecutableElement(typeElement, methodName)
         val mappingObj = DelegateMapping(annotationClz, typeElement, targetElement)
         delegateMappings.add(mappingObj)
         callMappings[mappingObj] = mutableListOf()
@@ -78,32 +72,6 @@ open class CodeDelegationProcessor(
         processingEnv.note("-----> ${this::class.java.simpleName}#process(Round $roundCount) End")
         roundCount++
         return true
-    }
-
-    /**
-     * 尝试在指定的类型（及其父类）中寻找匹配的方法对象。如果无法找到则返回 null。
-     */
-    private fun findTargetExecutableElement(
-        typeElement: TypeElement?,
-        methodName: String
-    ): ExecutableElement? {
-        //尝试查找匹配的方法
-        var targetElement: ExecutableElement? = null
-        var currentType = typeElement
-        //递归向上搜索
-        while (targetElement == null && currentType != null) {
-            targetElement = currentType.enclosedElements.firstOrNull {
-                it is ExecutableElement && it.simpleName.toString() == methodName
-            } as? ExecutableElement
-
-            val superClass = currentType.superclass
-            //到达根类型 java.lang.Object，退出搜索
-            if (superClass.kind == TypeKind.NONE) {
-                break
-            }
-            currentType = processingEnv.typeUtils.asElement(superClass) as? TypeElement
-        }
-        return targetElement
     }
 
     /**
@@ -312,19 +280,19 @@ open class CodeDelegationProcessor(
         }
         return builder.build()
     }
-
-    private fun decideFieldName(fieldType: TypeElement): String {
-        return fieldType.simpleName.toString().unCapitalize()
-    }
-
-    private fun decideRefArgName(ref: TypeElement): String {
-        return ref.simpleName.toString().lastWord()
-    }
-
-    private fun decideMethodArgName(arg: VariableElement): String {
-        return arg.simpleName.toString()
-//        return ClassName.get(arg.asType()).toString().lastWord()
-    }
+//
+//    private fun decideFieldName(fieldType: TypeElement): String {
+//        return fieldType.simpleName.toString().unCapitalize()
+//    }
+//
+//    private fun decideRefArgName(ref: TypeElement): String {
+//        return ref.simpleName.toString().lastWord()
+//    }
+//
+//    private fun decideMethodArgName(arg: VariableElement): String {
+//        return arg.simpleName.toString()
+////        return ClassName.get(arg.asType()).toString().lastWord()
+//    }
 
     /**
      * 生成单条方法调用。例如 `Foo.bar(arg1, arg2, arg3)`
