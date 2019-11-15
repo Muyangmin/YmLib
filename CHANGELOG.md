@@ -1,4 +1,9 @@
-### 0.5.0 SNAPSHOT
+### 0.6.0 SNAPSHOT
+#### New annotation and processor support!
+* Generated application with application lifecycle observers
+* Support ordered components
+
+### 0.5.0
 #### ymktx
 * New extend method for `EditText`: `trimmedString()`
 * New `XXX.fooCompat` series extend method (equivalent to call `XXXCompat.foo()` methods in official compat library.)

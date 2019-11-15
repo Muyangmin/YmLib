@@ -15,6 +15,7 @@ android {
 dependencies {
     api project(":ymktx")
     api project(":ymui")
+    api project(":ymlib-annotation")
 }
 
 publish {
