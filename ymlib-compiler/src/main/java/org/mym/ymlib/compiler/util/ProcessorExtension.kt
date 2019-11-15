@@ -10,7 +10,7 @@ import javax.tools.Diagnostic
 
 fun ProcessingEnvironment.note(message: String, element: Element? = null) {
     messager.printMessage(
-        Diagnostic.Kind.WARNING,
+        Diagnostic.Kind.NOTE,
         message,
         element
     )
