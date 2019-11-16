@@ -235,6 +235,7 @@ open class CodeDelegationProcessor(
         }
 
         val file = JavaFile.builder(packageName, typeBuilder.build())
+            .addFileComment(COMMENT_GEN_FILE)
             .build()
         file.writeTo(processingEnv.filer)
     }
@@ -247,7 +248,6 @@ open class CodeDelegationProcessor(
                 FieldSpec.builder(
                     type, decideFieldName(it.callClass)
                 ).addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addJavadoc(COMMENT_PUBLIC_FIELD)
                     .initializer("new \$T()", type)
                     .build()
             }

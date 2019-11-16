@@ -75,6 +75,7 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
             .addSingletonField()
 
         val javaFile = JavaFile.builder(PACKAGE_NAME, typeSpec.build())
+            .addFileComment(COMMENT_GEN_FILE)
             .build()
 //        processingEnv.note(javaFile.toString())
         javaFile.writeTo(processingEnv.filer)
@@ -85,7 +86,6 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
         val type = processingEnv.typeElementFromQualifier(QUALIFIER_GEN_DELEGATE)
         return FieldSpec.builder(ClassName.get(type), decideFieldName(type))
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-            .addJavadoc(COMMENT_PUBLIC_FIELD)
             .initializer("new \$T()", type)
             .build()
     }
@@ -95,7 +95,6 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
         val fieldSpec =
             FieldSpec.builder(ClassName.get(PACKAGE_NAME, GENERATE_APP_CLASS_NAME), fieldName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addJavadoc(COMMENT_PUBLIC_FIELD)
                 .build()
 
         val constructor = MethodSpec.constructorBuilder()
