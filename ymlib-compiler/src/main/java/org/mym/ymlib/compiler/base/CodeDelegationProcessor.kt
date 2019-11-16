@@ -246,7 +246,8 @@ open class CodeDelegationProcessor(
                 val type = ClassName.get(it.callClass.asType())
                 FieldSpec.builder(
                     type, decideFieldName(it.callClass)
-                ).addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                ).addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                    .addJavadoc(COMMENT_PUBLIC_FIELD)
                     .initializer("new \$T()", type)
                     .build()
             }
@@ -286,19 +287,6 @@ open class CodeDelegationProcessor(
         }
         return builder.build()
     }
-//
-//    private fun decideFieldName(fieldType: TypeElement): String {
-//        return fieldType.simpleName.toString().unCapitalize()
-//    }
-//
-//    private fun decideRefArgName(ref: TypeElement): String {
-//        return ref.simpleName.toString().lastWord()
-//    }
-//
-//    private fun decideMethodArgName(arg: VariableElement): String {
-//        return arg.simpleName.toString()
-////        return ClassName.get(arg.asType()).toString().lastWord()
-//    }
 
     /**
      * 生成单条方法调用。例如 `Foo.bar(arg1, arg2, arg3)`

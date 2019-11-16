@@ -63,13 +63,14 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
 
     private fun generateApplicationFile(): Boolean {
         //检查代理类是否已经生成，仅在生成后才能生成被代理的 Application。
-        processingEnv.elementUtils.getTypeElement("$PACKAGE_NAME.$DELEGATE_CLASS_NAME") ?: return false
+        processingEnv.elementUtils.getTypeElement("$PACKAGE_NAME.$DELEGATE_CLASS_NAME")
+            ?: return false
 
         val typeSpec = TypeSpec.classBuilder(GENERATE_APP_CLASS_NAME)
             .addModifiers(Modifier.PUBLIC)
             .superclass(processingEnv.classNameFromQualifier(QUALIFIER_APPLICATION))
             .addSuperinterface(processingEnv.classNameFromQualifier(QUALIFIER_MANUAL_EXIT_APP))
-            .addField(buildFieldSpec(processingEnv.typeElementFromQualifier(QUALIFIER_GEN_DELEGATE)))
+            .addField(buildDelegateField())
             .addMethods(buildMethods())
             .addSingletonField()
 
@@ -80,11 +81,22 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
         return true
     }
 
+    private fun buildDelegateField(): FieldSpec {
+        val type = processingEnv.typeElementFromQualifier(QUALIFIER_GEN_DELEGATE)
+        return FieldSpec.builder(ClassName.get(type), decideFieldName(type))
+            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+            .addJavadoc(COMMENT_PUBLIC_FIELD)
+            .initializer("new \$T()", type)
+            .build()
+    }
+
     private fun TypeSpec.Builder.addSingletonField(): TypeSpec.Builder {
         val fieldName = "instance"
-        val fieldSpec = FieldSpec.builder(ClassName.get(PACKAGE_NAME, GENERATE_APP_CLASS_NAME), fieldName)
-            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-            .build()
+        val fieldSpec =
+            FieldSpec.builder(ClassName.get(PACKAGE_NAME, GENERATE_APP_CLASS_NAME), fieldName)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addJavadoc(COMMENT_PUBLIC_FIELD)
+                .build()
 
         val constructor = MethodSpec.constructorBuilder()
             .addModifiers(Modifier.PUBLIC)
@@ -132,7 +144,7 @@ class ApplicationLifecycleProcessor : CodeDelegationProcessor(
                 .also {
                     if (!parentMethod.modifiers.contains(Modifier.ABSTRACT)) {
                         //调用父类方法
-                       it.addStatement("super.\$L(\$L)", methodName, originParams)
+                        it.addStatement("super.\$L(\$L)", methodName, originParams)
                     }
                 }
                 //调用 delegate 方法

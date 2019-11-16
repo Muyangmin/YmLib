@@ -3,6 +3,7 @@ package org.mym.ymlib.example.arch
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import org.mym.ymlib.YmApplication
 import org.mym.ymlib.annotation.ApplicationLifecycleAware
 import org.mym.ymlib.annotation.OnApplicationCreate
 import org.mym.ymlib.annotation.OnApplicationExit
@@ -73,3 +74,5 @@ class ActivityStack {
     }
 
 }
+
+fun <T: Activity> YmApplication.finishExcept(clz: KClass<T>) = applicationDelegate.activityStack.finishExcept(clz)
