@@ -1,4 +1,4 @@
-### 0.6.0 SNAPSHOT
+### 0.6.0
 #### New annotation and processor support!
 * Generated application with application lifecycle observers
 * Support ordered components
