@@ -20,6 +20,7 @@ dependencies {
     compileOnly deps.material
     compileOnly deps.recyclerView
     compileOnly deps.coreKtx
+    compileOnly project(":ymktx")
 }
 
 publish {

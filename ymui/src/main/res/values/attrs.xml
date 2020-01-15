@@ -21,4 +21,19 @@
             <flag name="bottom" value="8" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="YmuiMultiRippleView">
+        <attr name="ymui_paintColor" format="color|reference" />
+        <attr name="ymui_circleMode" format="enum">
+            <enum name="fill" value="0" />
+            <enum name="ring" value="1" />
+        </attr>
+        <attr name="ymui_maxCircles" format="integer" />
+        <attr name="ymui_duration" format="integer" />
+        <attr name="ymui_ringWidth" format="dimension" />
+        <attr name="ymui_startRadius" format="dimension" />
+        <attr name="ymui_startAlpha" format="float" />
+        <attr name="ymui_endRadius" format="dimension" />
+        <attr name="ymui_endAlpha" format="float" />
+    </declare-styleable>
 </resources>

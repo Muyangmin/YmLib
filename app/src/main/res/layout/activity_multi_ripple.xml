@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2978FF"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText, ButtonStyle">
+
+    <org.mym.ymlib.widget.YmuiMultiRippleView
+        android:id="@+id/multi_ripple_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ymui_circleMode="ring"
+        app:ymui_endAlpha="0.1"
+        app:ymui_endRadius="150dp"
+        app:ymui_maxCircles="5"
+        app:ymui_paintColor="#FFFFFF"
+        app:ymui_ringWidth="2dp"
+        app:ymui_startAlpha="1"
+        app:ymui_startRadius="107dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/mr_btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始" />
+
+        <Button
+            android:id="@+id/mr_btn_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂停" />
+
+        <Button
+            android:id="@+id/mr_btn_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="恢复" />
+
+        <Button
+            android:id="@+id/mr_btn_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止" />
+    </LinearLayout>
+</FrameLayout>

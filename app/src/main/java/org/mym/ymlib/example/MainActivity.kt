@@ -33,5 +33,9 @@ class MainActivity : AppCompatActivity() {
         main_btn_mutex.setOnClickListener {
             startActivity(Intent(this, MutexActivity::class.java))
         }
+
+        main_btn_ripple.setOnClickListener {
+            startActivity(Intent(this, MultiRippleActivity::class.java))
+        }
     }
 }

@@ -37,6 +37,10 @@
         <activity
             android:name=".MutexActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".MultiRippleActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -1,3 +1,7 @@
+### 0.7.0-SNAPSHOT
+#### Ymui
+* New widget: `YmuiMultiRippleView`.
+
 ### 0.6.0
 #### New annotation and processor support!
 * Generated application with application lifecycle observers
