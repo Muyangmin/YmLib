@@ -160,10 +160,14 @@ class YmuiMultiRippleView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val currentFraction = animator.animatedFraction
+        val currentFraction = if (isInEditMode) {
+            1F
+        } else {
+            animator.animatedFraction
+        }
         //例如每个圆圈占比 0.25, 当前位置0.76，则需要画四个圈
         if (needDrawCircles < maxCircles) {
-            needDrawCircles = (currentFraction / fractionPerCircle).toInt() + 1
+            needDrawCircles = min((currentFraction / fractionPerCircle).toInt() + 1, maxCircles)
         }
 //        Log.v(VIEW_LOG_TAG, "currentFraction = $currentFraction, circlesToDraw: $needDrawCircles")
         for (index in 0 until needDrawCircles) {
