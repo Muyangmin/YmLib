@@ -123,15 +123,36 @@ class YmuiMultiRippleView @JvmOverloads constructor(
         paint.strokeWidth = ringWidth.toFloat()
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val requiredSize = endRadius.takeIf { endRadius == Int.MAX_VALUE } ?: endRadius * 2
+        val width = getSize(widthMeasureSpec, requiredSize)
+        val height = getSize(heightMeasureSpec, requiredSize)
+//        Log.v(VIEW_LOG_TAG, "measured width=$width, height=$height")
+        setMeasuredDimension(width, height)
+    }
+
+    private fun getSize(parentSpec: Int, requireSize: Int): Int {
+        val specMode = MeasureSpec.getMode(parentSpec)
+        val specSize = MeasureSpec.getSize(parentSpec)
+
+        return when (specMode) {
+            MeasureSpec.EXACTLY -> specSize
+            MeasureSpec.AT_MOST -> min(specSize, requireSize)
+            else /*MeasureSpec.UNSPECIFIED*/ -> requireSize
+        }
+    }
+
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         if (changed) {
-            center.x = (left + right) / 2F
-            center.y = (top + bottom) / 2F
+            center.x = width / 2F
+            center.y = height / 2F
+//            Log.v(VIEW_LOG_TAG, "left=$left, right=$right, centerX = ${center.x}")
+//            Log.v(VIEW_LOG_TAG, "top=$top, bottom=$bottom, centerY = ${center.y}")
             //计算对角线长度，作为圆圈的实际最大半径
             val width = right - left
             val height = bottom - top
-            val diagonal = sqrt((width * width + height * height).toDouble())
+            val diagonal = sqrt((width * width + height * height).toDouble()) / 2.0
             endRadius = min(endRadius, diagonal.roundToInt())
         }
     }
