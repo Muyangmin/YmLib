@@ -10,6 +10,7 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.animation.LinearInterpolator
 import androidx.annotation.ColorInt
 import androidx.annotation.IntDef
 import androidx.core.graphics.blue
@@ -79,7 +80,8 @@ class YmuiMultiRippleView @JvmOverloads constructor(
     /**
      * 动画计算器，借用 alpha 通道值来做其参数。
      */
-    private var animator: ValueAnimator
+    var animator: ValueAnimator
+        private set
 
     private var floatEvaluator = FloatEvaluator()
 
@@ -107,6 +109,7 @@ class YmuiMultiRippleView @JvmOverloads constructor(
 
         animator = ValueAnimator.ofFloat(1F, 0F).apply {
             duration = this@YmuiMultiRippleView.duration.toLong()
+            interpolator = LinearInterpolator()
             addUpdateListener {
                 postInvalidate()
             }
