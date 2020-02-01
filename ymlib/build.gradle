@@ -13,6 +13,7 @@ android {
 }
 
 dependencies {
+    compileOnly deps.coreKtx
     api project(":ymktx")
     api project(":ymui")
     api project(":ymlib-annotation")
