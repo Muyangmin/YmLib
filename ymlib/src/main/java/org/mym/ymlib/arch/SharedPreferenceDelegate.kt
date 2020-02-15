@@ -104,4 +104,23 @@ class SharedPreferenceDelegate(prefCreator: () -> SharedPreferences) {
                 }
             }
         }
+
+    /**
+     * 任意可序列化的对象，适合格式化的方便存取的数据 (例如使用 gson 或 jackson).
+     *
+     * @param[serializer] 用于将对象 `T` 序列化为 String, 注意参数可能为 `null`.
+     * @param[deserializer] 用于将字符串反序列化为对象 `T`, 注意参数可能为 `null`..
+     */
+    fun <T> serialObject(serializer: (T?) -> String?, deserializer: (String?) -> T?) =
+        object : ReadWriteProperty<Any, T?> {
+            override fun getValue(thisRef: Any, property: KProperty<*>): T? {
+                return deserializer(preferences.getString(property.name, null))
+            }
+
+            override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) {
+                preferences.edit {
+                    putString(property.name, serializer(value))
+                }
+            }
+        }
 }
