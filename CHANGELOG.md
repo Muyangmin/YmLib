@@ -3,7 +3,10 @@
 * New widget: `YmuiMultiRippleView`.
 
 #### YmLib
-* New delegate class `SharedPreferenceDelegate`
+* New delegate class `SharedPreferenceDelegate`.
+
+#### YmKtx
+* New collection function `mapOfNonNullValues`.
 
 ### 0.6.0
 #### New annotation and processor support!
