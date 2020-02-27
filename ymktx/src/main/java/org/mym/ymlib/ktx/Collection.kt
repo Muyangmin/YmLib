@@ -16,6 +16,17 @@ fun <K, V> MutableMap<K, V>.putIfValueNotNull(key: K, value: V?) {
 }
 
 /**
+ * 类似于标准库的 mapOf 方法，但会自动过滤掉为 `null` 的 kv 对。
+ */
+fun <K, V> mapOfNonNullValues(vararg pairs: Pair<K, V?>): Map<K, V> {
+    val map = mutableMapOf<K, V>()
+    for (pair in pairs) {
+        map.putIfValueNotNull(pair.first, pair.second)
+    }
+    return map
+}
+
+/**
  * 判断这个 [CircularArray] 是否为 `null` 或空。
  *
  * Determine whether this circular array is null or empty.

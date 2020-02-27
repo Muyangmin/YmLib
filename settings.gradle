@@ -1,1 +1,1 @@
-include ':app', ':ymlib', ':ymktx', ':ymui', ':ymlib-annotation', ':ymlib-compiler', ':ymlib-arch'
+include ':app', ':ymlib', ':ymktx', ':ymui', ':ymlib-annotation', ':ymlib-compiler'

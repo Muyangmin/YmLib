@@ -2,7 +2,11 @@
 #### Ymui
 * New widget: `YmuiMultiRippleView`.
 
-#### Ymktx
+#### YmLib
+* New delegate class `SharedPreferenceDelegate`.
+
+#### YmKtx
+* New collection function `mapOfNonNullValues`.
 * New `View` extension methods: batch set visibility.
 
 ### 0.6.0

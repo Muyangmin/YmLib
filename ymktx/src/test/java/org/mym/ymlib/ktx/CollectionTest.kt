@@ -21,4 +21,21 @@ class CollectionTest {
         Assert.assertEquals(2, map.size)
     }
 
+    @Test
+    fun testNonNullValueMapCase1() {
+        val map = mapOfNonNullValues<String, Any>(
+            "abc" to "def",
+            "def" to null
+        )
+        Assert.assertEquals(1, map.size)
+    }
+
+    @Test
+    fun testNonNullValueMapCase2() {
+        val map = mapOfNonNullValues(
+            "abc" to "def",
+            "def" to 123
+        )
+        Assert.assertEquals(2, map.size)
+    }
 }

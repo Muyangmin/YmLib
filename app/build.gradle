@@ -26,7 +26,6 @@ dependencies {
     implementation deps.rounedImageView
 
     implementation project(":ymlib")
-    implementation project(":ymlib-arch")
     kapt project(":ymlib-compiler")
 //    implementation ("org.mym.ymlib:ymlib:0.3.2")
 }
