@@ -2,6 +2,9 @@
 #### Ymui
 * New widget: `YmuiMultiRippleView`.
 
+#### Ymktx
+* New `View` extension methods: batch set visibility.
+
 ### 0.6.0
 #### New annotation and processor support!
 * Generated application with application lifecycle observers
