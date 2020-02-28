@@ -40,3 +40,17 @@ fun Collection<View>.setAllVisibility(visibility: Int) = forEach {
 fun Array<out View>.setAllVisibility(visibility: Int) = forEach {
     it.visibility = visibility
 }
+
+/**
+ * 根据 [predicate] 来判断应当为此视图设置何种可见性。
+ *
+ * @param[predicate] 判断条件。该函数的执行不应该产生 side effect.
+ * @param[otherwise] 条件不成立时应设置为何种可见性，默认为 [View.GONE]。
+ */
+inline fun View.visibleIf(otherwise: Int = View.GONE, predicate: () -> Boolean) {
+    visibility = if (predicate.invoke()) {
+        View.VISIBLE
+    } else {
+        otherwise
+    }
+}
