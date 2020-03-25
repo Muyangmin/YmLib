@@ -67,6 +67,15 @@ fun BigDecimal.isPureInt(): Boolean {
 }
 
 /**
+ * 判断当前 [BigDecimal] 是否为零。
+ *
+ * 与 == 操作符(即 [equals]方法)不同，这个方法仅做数学意义上的比较，等同于调用 compareTo(BigDecimal.ZERO)。
+ */
+fun BigDecimal.isZero(): Boolean {
+    return compareTo(BigDecimal.ZERO) == 0
+}
+
+/**
  * Returns the sum of all values produced by [selector] function applied to each element in the collection.
  */
 inline fun <T> Iterable<T>.sumByBigDecimal(selector: (T) -> BigDecimal): BigDecimal {

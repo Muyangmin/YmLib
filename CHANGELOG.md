@@ -8,6 +8,7 @@
 #### YmKtx
 * New collection function `mapOfNonNullValues`.
 * New `View` extension methods: batch set visibility.
+* New `BigDecimal` extension method: `isZero`.
 
 ### 0.6.0
 #### New annotation and processor support!
