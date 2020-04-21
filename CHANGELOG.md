@@ -7,8 +7,9 @@
 
 #### YmKtx
 * New collection function `mapOfNonNullValues`.
-* New `View` extension methods: batch set visibility.
+* New `View` extension methods: batch set visibility, throttled click listener.
 * New `BigDecimal` extension method: `isZero`.
+* New `Context` extension method: `copyToClipboard`.
 
 ### 0.6.0
 #### New annotation and processor support!

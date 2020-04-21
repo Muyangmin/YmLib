@@ -54,3 +54,26 @@ inline fun View.visibleIf(otherwise: Int = View.GONE, predicate: () -> Boolean) 
         otherwise
     }
 }
+
+/**
+ * 设置带有时间限流（即防重复）功能的点击监听。
+ *
+ * @param[throttleMillis] 允许点击的最小时间间隔。
+ * @param[listener] 原始点击逻辑。
+ *
+ * @since 0.7.0
+ */
+fun View.setThrottledOnClickListener(throttleMillis: Long, listener: (View?) -> Unit) {
+    val wrapped = object : View.OnClickListener {
+        var lastClick: Long = 0
+
+        override fun onClick(v: View?) {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastClick > throttleMillis) {
+                lastClick = currentTime
+                listener(v)
+            }
+        }
+    }
+    setOnClickListener(wrapped)
+}
