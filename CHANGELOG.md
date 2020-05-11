@@ -1,4 +1,4 @@
-### 0.7.0-SNAPSHOT
+### 0.7.0
 #### Ymui
 * New widget: `YmuiMultiRippleView`.
 
