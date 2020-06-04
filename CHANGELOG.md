@@ -1,3 +1,7 @@
+### 0.8.0 SNAPSHOT
+#### Ymktx
+* New methods for list construction, destruction and sorting.
+
 ### 0.7.0
 #### Ymui
 * New widget: `YmuiMultiRippleView`.
