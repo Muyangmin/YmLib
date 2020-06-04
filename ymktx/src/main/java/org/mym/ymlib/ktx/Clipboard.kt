@@ -18,7 +18,7 @@ fun Context.copyToClipboard(
     clipDataBuilder: () -> ClipData
 ) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboard.primaryClip = clipDataBuilder()
+    clipboard.setPrimaryClip(clipDataBuilder())
     if (!toastText.isNullOrEmpty()) {
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show()
     }
